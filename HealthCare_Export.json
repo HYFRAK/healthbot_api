@@ -1,0 +1,311 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "HealthCare",
+    "version": "1",
+    "intents": [
+      {
+        "name": "IBM_End",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Bye",
+          "Thanks",
+          "Thanks for helping me",
+          "Great job. Thanks",
+          "quit",
+          "stop",
+          "end",
+          "Bbyeee"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Happy to help you!"
+            },
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Glad to help you out!"
+            }
+          ]
+        }
+      },
+      {
+        "name": "IBM_Doctor_Consultancy",
+        "version": "5",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I want to consult a doctor through video",
+          "video call a doctor",
+          "online consultation",
+          "video consultation"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.DATE",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Sure, on what date would you like me to schedule your online appointment."
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "date"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.TIME",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "At what time do you want to fix your online appointment."
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "time"
+          }
+        ],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Okay, let me connect you with a doctor"
+            }
+          ]
+        }
+      },
+      {
+        "name": "IBM_Symptoms",
+        "version": "3",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:525041405062:function:healthcare",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "not feeling well",
+          "please test my symptoms",
+          "test the disease",
+          "can you help me",
+          "I have some symptoms"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "IBM_Symptoms",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What are your symptoms?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "IBM_symptom"
+          },
+          {
+            "sampleUtterances": [],
+            "slotType": "IBM_yon",
+            "slotTypeVersion": "1",
+            "obfuscationSetting": "NONE",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to add another symptom?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "name": "IBM_yon"
+          }
+        ]
+      },
+      {
+        "name": "IBM_Welcome",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "hi",
+          "hey",
+          "Who are you"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Hey there! I am your personalized Health Assistant! How can I help you today?"
+            }
+          ]
+        }
+      },
+      {
+        "name": "IBM_Doctor_visit",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "doctors near me",
+          "I want to visit a doctor",
+          "hospitals near me",
+          "clinics near me",
+          "I want to go to a hospital"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Okay, let me give you location of hospitals near you."
+            },
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Here are a few locations of clinics near you."
+            }
+          ]
+        }
+      },
+      {
+        "name": "IBM_Xray",
+        "version": "6",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I would like to check if any abnormalities are present in my x-ray",
+          "Check if x-ray is having any abnormalities",
+          "Like to upload my x-ray",
+          "Is there anything wrong with this x-ray"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"imageUrl\":\"https://images.ctfassets.net/hrltx12pl8hq/4yCvP6Ic8ihk9EFV0GG9FK/f8b269d74567269b988241e77881a263/01-healthcare-medical_1680967678.jpg\",\"subTitle\":\"WebApp\",\"title\":\"WebApp\",\"buttons\":[{\"text\":\"HomePage\",\"value\":\"HomePage\"}]}]}",
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Please go to our prediction option on homepage for any x-ray related queries"
+            }
+          ]
+        }
+      }
+    ],
+    "slotTypes": [
+      {
+        "name": "IBM_Symptoms",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Stomach ache"
+          },
+          {
+            "value": "Headache"
+          },
+          {
+            "value": "Cough "
+          },
+          {
+            "value": "Runny Nose"
+          },
+          {
+            "value": "Fever "
+          },
+          {
+            "value": "Body ache"
+          },
+          {
+            "value": "Cardiac Pain"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "IBM_yon",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "no",
+            "synonyms": [
+              "No",
+              "NO"
+            ]
+          },
+          {
+            "value": "yes",
+            "synonyms": [
+              "Yes",
+              "YES"
+            ]
+          },
+          {
+            "value": "ok"
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      }
+    ],
+    "voiceId": "Kendra",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    },
+    "detectSentiment": false,
+    "enableModelImprovements": true
+  }
+}
